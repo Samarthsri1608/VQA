@@ -1,0 +1,20 @@
+/* Component-specific styles */
+.hero{display:flex;align-items:center;justify-content:space-between;padding:28px;border-radius:12px}
+.hero .left{flex:1}
+.hero h1{font-size:2rem;color:var(--primary-color);margin:0 0 8px}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:900px){.card-grid{grid-template-columns:1fr}}
+
+/* Detection result styles */
+.detection-list div{padding:8px 10px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.02)}
+.accordion{border-radius:10px;overflow:hidden}
+.accordion button{width:100%;text-align:left;padding:12px;border:none;background:transparent;color:var(--text-color);font-weight:600}
+.accordion-content{display:none;padding:10px 14px;color:var(--muted);}
+.accordion.active .accordion-content{display:block}
+
+/* Login/Register centered */
+.auth-wrap{max-width:420px;margin:60px auto}
+.auth-card{padding:28px;border-radius:14px}
+.auth-links{margin-top:12px;text-align:center}
+.auth-links a{color:var(--primary-color);text-decoration:none}
+.auth-error{color:#ff6666;margin:8px 0;text-align:center}

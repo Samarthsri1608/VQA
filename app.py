@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 import hashlib
 import time
 from pathlib import Path
-from auth.auth import auth_bp, login_required, init_db
+from auth import auth_bp, login_required, init_db
 
 import prompts  # Custom prompts module
 

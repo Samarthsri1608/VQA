@@ -4,128 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Safety Vision</title>
-<style>
-  :root {
-    --primary-color: #1f8ef1;
-    --bg-color: #121212;
-    --card-bg: #1e1e2f;
-    --text-color: #e0e0e0;
-    --secondary-color: #bbbbbb;
-    --gap: 24px;
-    --radius: 12px;
-  }
-
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-  }
-
-  header {
-    background: #0f0f17;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 16px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--gap);
-  }
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: 1fr; }
-  }
-
-  .card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 24px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  }
-
-  h3 {
-    margin-top: 0;
-    margin-bottom: 16px;
-    color: var(--primary-color);
-    font-weight: 600;
-  }
-
-  input[type="file"], button {
-    width: 100%;
-    border-radius: var(--radius);
-    padding: 12px;
-    margin-bottom: 16px;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-  }
-  button {
-    background: var(--primary-color);
-    color: #fff;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  button:hover { background: #1066c9; }
-
-  #annotated {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius);
-    margin-top: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.7);
-  }
-
-  .accordion {
-    margin: 10px 0;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .accordion button {
-    width: 100%;
-    text-align: left;
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: inherit;
-    color: inherit;
-  }
-  .accordion-content {
-    display: none;
-    padding: 10px 14px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-  .accordion.active .accordion-content {
-    display: block;
-  }
-
-  /* Section colors */
-  .wrong { background: #4a1f1f; color: #ff7b7b; }
-  .right { background: #1f3d2a; color: #7bff9d; }
-  .todo  { background: #2b2b3d; color: #e0e0e0; }
-
-</style>
+  <link rel="preload" href="/static/css/theme.css" as="style">
+  <link rel="stylesheet" href="/static/css/theme.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script defer src="/static/js/app.js"></script>
+</head>
 </head>
 <body>
 
-<header>Safety Vision</header>
+<header class="site-header">
+  <img src="/static/img/logo.svg" alt="Safety Vision" class="site-logo">
+  <div style="flex:1"></div>
+  <nav>
+    <a class="button" href="/auth/logout">Logout</a>
+  </nav>
+</header>
 
 <div class="container">
 

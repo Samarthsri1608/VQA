@@ -4,66 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Safety Audit Report</title>
-<style>
-  :root {
-    --primary-color: #1f8ef1;
-    --bg-color: #121212;
-    --card-bg: #1e1e2f;
-    --text-color: #e0e0e0;
-    --gap: 24px;
-    --radius: 12px;
-  }
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-  }
-  header {
-    background: #0f0f17;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
-  }
-  .container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 16px;
-  }
-  .card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 24px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  }
-  h3 {
-    margin-top: 0;
-    color: var(--primary-color);
-  }
-  input, button, textarea {
-    width: 100%;
-    border-radius: var(--radius);
-    padding: 10px;
-    margin: 8px 0;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-  }
-  button {
-    background: var(--primary-color);
-    color: #fff;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  button:hover { background: #1066c9; }
-</style>
+  <link rel="preload" href="/static/css/theme.css" as="style">
+  <link rel="stylesheet" href="/static/css/theme.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script defer src="/static/js/app.js"></script>
+</head>
 </head>
 <body>
-<a href="/template/index.html" style="position: absolute; left: 20px; top: 20px; text-decoration: none; color: var(--primary-color); font-size: 2rem;">&#x2190;</a>
-<header>Safety Vision - Report</header>
+<a href="/" style="position: absolute; left: 20px; top: 20px; text-decoration: none; color: var(--primary-color); font-size: 2rem;">&#x2190;</a>
+<header class="site-header">
+  <img src="/static/img/logo.svg" alt="Safety Vision" class="site-logo">
+  <div style="flex:1"></div>
+  <nav>
+    <a class="button" href="/auth/logout">Logout</a>
+  </nav>
+</header>
 
 <div class="container">
   <div class="card">
