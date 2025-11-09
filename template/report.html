@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safety Audit Report</title>
+<style>
+  :root {
+    --primary-color: #1f8ef1;
+    --bg-color: #121212;
+    --card-bg: #1e1e2f;
+    --text-color: #e0e0e0;
+    --gap: 24px;
+    --radius: 12px;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+  }
+  header {
+    background: #0f0f17;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  }
+  h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+  }
+  input, button, textarea {
+    width: 100%;
+    border-radius: var(--radius);
+    padding: 10px;
+    margin: 8px 0;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+  }
+  button {
+    background: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  button:hover { background: #1066c9; }
+</style>
+</head>
+<body>
+<a href="/template/index.html" style="position: absolute; left: 20px; top: 20px; text-decoration: none; color: var(--primary-color); font-size: 2rem;">&#x2190;</a>
+<header>Safety Vision - Report</header>
+
+<div class="container">
+  <div class="card">
+    <h3>Generate Multi-Image Report</h3>
+    <label>Site Location:</label>
+    <input type="text" id="location" placeholder="Enter site location" />
+    <label>Audit Start Date:</label>
+    <input type="date" id="audit_date" placeholder="Enter Date of Audit" />
+
+    <label>Company Name:</label>
+    <input type="text" id="company_name" placeholder="Enter company name" required />
+
+    <label>Site Name:</label>
+    <input type="text" id="site_name" placeholder="Enter site name" required />
+  
+
+    <label>Upload Images:</label>
+    <input type="file" id="images" accept="image/*" multiple />
+
+    <label>Company Logo (optional):</label>
+    <input type="file" id="company_logo" accept="image/png, image/jpeg" />
+
+    <!-- <label>Upload Good Practices:</label>
+    <input type="file" id="good_practices" accept="image/*" multiple /> -->
+
+    <button id="btnReport">Generate PDF Report</button>
+  </div>
+</div>
+
+<script>
+const btnReport = document.getElementById("btnReport");
+
+btnReport.addEventListener("click", async () => {
+  const loc = document.getElementById("location").value.trim();
+  const imgs = document.getElementById("images").files;
+  if (!loc) { alert("Please enter site location."); return; }
+  if (!imgs.length) { alert("Please upload at least one image."); return; }
+
+  btnReport.disabled = true;
+  btnReport.textContent = "Generating…";
+
+  const fd = new FormData();
+  fd.append("location", document.getElementById("location").value);
+  fd.append("audit_date", document.getElementById("audit_date").value);
+  fd.append("company_name", document.getElementById("company_name").value);
+  fd.append("site_name", document.getElementById("site_name").value);
+
+  const logoFile = document.getElementById("company_logo").files[0];
+  if (logoFile) {
+    fd.append("company_logo", logoFile);
+  }
+
+  for (let i = 0; i < imgs.length; i++) {
+    fd.append("images", imgs[i]);
+  }
+
+
+  try {
+    const res = await fetch("/multi_report", { method: "POST", body: fd });
+    if (!res.ok) throw new Error("Report generation failed");
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    // Auto download PDF
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "safety_report.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+    alert("Error: " + err.message);
+  } finally {
+    btnReport.disabled = false;
+    btnReport.textContent = "Generate PDF Report";
+  }
+});
+</script>
+
+</body>
+</html>
