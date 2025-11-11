@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Audits</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/app.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <img src="/static/img/logo.svg" alt="logo" height="36">
+      <div style="margin-left:12px;">
+        <div style="font-weight:700">VQA Auditor</div>
+        <div style="font-size:13px;color:var(--muted)">Audits</div>
+      </div>
+      <nav style="margin-left:auto;display:flex;gap:10px;align-items:center;">
+        <a href="/" class="button">Home</a>
+        <a href="/audits" class="button" style="background:transparent;color:var(--muted);box-shadow:none;padding:8px 10px">Audits</a>
+        <a href="/profile" class="button" style="background:transparent;color:var(--muted);box-shadow:none;padding:8px 10px">Profile</a>
+      </nav>
+    </header>
+    <main style="max-width:var(--max-width);margin:28px auto;padding:0 18px;">
+      <section class="card">
+        <h2>Your Audits</h2>
+        <div id="audits-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px;"></div>
+      </section>
+    </main>
+
+    <script>
+      async function loadAudits(){
+        try{
+          const res = await fetch('/api/audits');
+          const data = await res.json();
+          const container = document.getElementById('audits-list');
+          container.innerHTML = '';
+          if(!data || data.length === 0){
+            container.innerHTML = '<div class="card">No audits yet.</div>';
+            return;
+          }
+          for(const a of data){
+            const el = document.createElement('div');
+            el.className = 'card';
+            el.innerHTML = `<h4>${a.site}</h4><div style="color:var(--muted);font-size:13px">${a.company} · ${a.date}</div><p style="margin-top:8px">${a.summary}</p><div style="margin-top:12px"><a class="button" href="/audits/${a.id}">View</a></div>`;
+            container.appendChild(el);
+          }
+        }catch(e){
+          document.getElementById('audits-list').innerHTML = '<div class="card">Failed to load audits.</div>';
+        }
+      }
+      loadAudits();
+    </script>
+  </body>
+</html>

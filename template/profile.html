@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/app.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <img src="/static/img/logo.svg" alt="logo" height="36">
+      <div style="margin-left:12px;">
+        <div style="font-weight:700">VQA Auditor</div>
+        <div style="font-size:13px;color:var(--muted)">Profile</div>
+      </div>
+      <nav style="margin-left:auto;display:flex;gap:10px;align-items:center;">
+        <a href="/" class="button">Home</a>
+        <a href="/audits" class="button" style="background:transparent;color:var(--muted);box-shadow:none;padding:8px 10px">Audits</a>
+        <a href="/auth/logout" class="button">Logout</a>
+      </nav>
+    </header>
+    <main style="max-width:var(--max-width);margin:28px auto;padding:0 18px;">
+      <section class="card">
+        <h2>Profile</h2>
+        <p>This is a placeholder profile page. For now we show the signed-in username and a simple logout link.</p>
+        <div style="margin-top:12px;color:var(--muted)">Username: <strong id="uname">—</strong></div>
+      </section>
+    </main>
+
+    <script>
+      // Pull username from a simple endpoint if available.
+      async function loadProfile(){
+        try{
+          const res = await fetch('/api/me');
+          if(!res.ok) return;
+          const j = await res.json();
+          document.getElementById('uname').innerText = j.username || '—';
+        }catch(e){}
+      }
+      loadProfile();
+    </script>
+  </body>
+</html>

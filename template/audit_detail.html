@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Audit Detail</title>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/app.css">
+-  </head>
++  </head>
+   <body>
+     <header class="site-header">
+       <img src="/static/img/logo.svg" alt="logo" height="36">
+       <div style="margin-left:12px;">
+         <div style="font-weight:700">VQA Auditor</div>
+         <div style="font-size:13px;color:var(--muted)">Audit Details</div>
+       </div>
+       <nav style="margin-left:auto;display:flex;gap:10px;align-items:center;">
+         <a href="/" class="button">Home</a>
+         <a href="/audits" class="button" style="background:transparent;color:var(--muted);box-shadow:none;padding:8px 10px">Audits</a>
+         <a href="/profile" class="button" style="background:transparent;color:var(--muted);box-shadow:none;padding:8px 10px">Profile</a>
+       </nav>
+     </header>
+     <main style="max-width:var(--max-width);margin:28px auto;padding:0 18px;">
+       <section class="card">
+         <div id="audit-root">
+           <h2>Loading…</h2>
+         </div>
+       </section>
+     </main>
+
+     <script>
+       async function loadAudit(){
+         const path = window.location.pathname;
+         const parts = path.split('/');
+         const id = parts[2];
+         try{
+           const res = await fetch('/api/audits/' + id);
+           if(!res.ok){
+             document.getElementById('audit-root').innerHTML = '<p>Audit not found.</p>';
+             return;
+           }
+           const a = await res.json();
+           const root = document.getElementById('audit-root');
+           root.innerHTML = `<h2>${a.site} — ${a.company}</h2><div style="color:var(--muted)">${a.date} · ${a.total_findings} findings</div><p style="margin-top:12px">${a.summary}</p><h3 style="margin-top:18px">Findings</h3>`;
+           const ul = document.createElement('div');
+           for(const f of a.findings){
+             const item = document.createElement('div');
+             item.className = 'card';
+             item.style.marginTop = '10px';
+             item.innerHTML = `<strong>${f.heading}</strong><div style="color:var(--muted)">${f.one_liner}</div>`;
+             root.appendChild(item);
+           }
+         }catch(e){
+           document.getElementById('audit-root').innerHTML = '<p>Failed to load.</p>';
+         }
+       }
+       loadAudit();
+     </script>
+   </body>
+ </html>

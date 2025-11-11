@@ -16,6 +16,7 @@ import hashlib
 import time
 from pathlib import Path
 from auth import auth_bp, login_required, init_db
+from mock_data import list_audits, get_audit
 
 import prompts  # Custom prompts module
 
@@ -521,6 +522,59 @@ def multi_report():
 @login_required
 def report_page():
     return send_file("template/report.html")
+
+
+# --- Audits and profile pages (UI + tiny JSON APIs using mock data) ---
+@app.route("/audits")
+@login_required
+def audits_page():
+    return send_file("template/audits.html")
+
+
+@app.route("/api/audits")
+@login_required
+def audits_api():
+    return jsonify(list_audits())
+
+
+@app.route("/audits/<int:audit_id>")
+@login_required
+def audit_detail_page(audit_id: int):
+    return send_file("template/audit_detail.html")
+
+
+@app.route("/api/audits/<int:audit_id>")
+@login_required
+def audit_detail_api(audit_id: int):
+    a = get_audit(audit_id)
+    if not a:
+        return jsonify({"error": "not found"}), 404
+    return jsonify(a)
+
+
+@app.route("/profile")
+@login_required
+def profile_page():
+    return send_file("template/profile.html")
+
+
+@app.route("/subscription")
+@login_required
+def subscription_page():
+    return send_file("template/subscription.html")
+
+
+@app.route("/api/me")
+@login_required
+def whoami():
+    # Minimal API for client-side profile rendering
+    user = None
+    try:
+        from flask import session
+        user = session.get("user")
+    except Exception:
+        user = None
+    return jsonify({"username": user})
 
 
 if __name__ == "__main__":
