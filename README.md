@@ -24,6 +24,7 @@ Each hazard is visually highlighted on the image with bounding boxes and severit
 ✅ Interactive frontend with expandable accordion sections
 ✅ Fully local deployment using Flask + HTML/JS
 
+```
 🗂️ Project Structure
 SafetyVision/
 │
@@ -31,8 +32,10 @@ SafetyVision/
 ├── index.html           # Frontend UI for upload and results
 ├── requirements.txt     # Python dependencies (see below)
 └── README.md            # Documentation
+```
 
 ⚙️ Setup Instructions
+```
 1. Clone the repository
 git clone https://github.com/yourusername/safety-vision.git
 cd safety-vision
@@ -44,7 +47,7 @@ venv\Scripts\activate      # (on Windows)
 
 3. Install dependencies
 pip install -r requirements.txt
-
+```
 
 If you don’t have a requirements.txt, create one with:
 
